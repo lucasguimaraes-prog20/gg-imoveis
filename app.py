@@ -452,8 +452,8 @@ elif st.session_state["etapa_fluxo"] == "painel_geral":
                      height: 280px; border-radius: 16px; display: flex; align-items: center;
                      justify-content: center; margin-bottom: 2rem; position: relative;'>
             <div style='background: rgba(0,0,0,0.35); padding: 2rem 3rem; border-radius: 12px; text-align: center;'>
-                <h1 style='color: #FFFFFF; margin: 0; font-size: 2.4rem;'>Sua casa a um passo de você</h1>
-                <p style='color: #E2E8F0; font-size: 1.1rem; margin-top: 0.5rem;'>Encontre o lar perfeito para criar as melhores memórias com quem você ama.</p>
+                <h1 style='color: #FFFFFF; margin: 0; font-size: 2.4rem; font-weight: 800; letter-spacing: -0.5px; line-height: 1.3;'>Sua casa a um passo de você</h1>
+                <p style='color: #FFFFFF; font-size: 1.1rem; margin-top: 0.5rem; font-weight: 400; letter-spacing: 0.3px;'>Encontre o lar perfeito para criar as melhores memórias com quem você ama.</p>
             </div>
         </div>
         """,
