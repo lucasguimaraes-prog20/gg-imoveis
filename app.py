@@ -232,6 +232,23 @@ st.markdown(
             color: #FFFFFF !important;
             font-weight: bold !important;
         }}
+
+        div[data-testid="stFormSubmitHelp"] {{
+            display: none !important;
+        }}
+
+        .stFormSubmitButton + p {{
+            display: none !important;
+        }}
+
+        div[data-baseweb="form"]::after {{
+            content: "Pressione Enter para enviar" !important;
+            display: block !important;
+            color: {sub_color} !important;
+            font-size: 0.8rem !important;
+            text-align: right !important;
+            margin-top: 4px !important;
+        }}
     </style>
     """,
     unsafe_allow_html=True,
@@ -272,6 +289,15 @@ if st.session_state["etapa_fluxo"] == "login":
             senha = st.text_input("Senha", type="password", placeholder="Digite sua senha", key="login_senha")
 
             submit_login = st.form_submit_button("Entrar", use_container_width=True)
+
+        esq_col1, esq_col2 = st.columns([2, 1])
+        with esq_col2:
+            if st.button("Esqueceu a senha?", key="btn_esqueci_senha"):
+                st.session_state["etapa_fluxo"] = "recuperar_senha"
+                st.rerun()
+
+        if st.button("Preciso de Ajuda", key="btn_ajuda_login"):
+            st.info("Use seu CPF (11 dígitos) e a senha cadastrada para acessar. Se esqueceu a senha, clique em 'Esqueceu a senha?'.")
 
         if submit_login:
             cpf_limpo = re.sub(r"\D", "", cpf)
@@ -338,6 +364,9 @@ elif st.session_state["etapa_fluxo"] == "cadastro_inicial":
             st.caption("Requisitos da senha: mínimo de 6 caracteres, 1 caractere especial e 1 letra maiúscula.")
             submit_cadastrar = st.form_submit_button("Criar Minha Conta", use_container_width=True)
 
+        if st.button("Preciso de Ajuda", key="btn_ajuda_cadastro"):
+            st.info("Preencha todos os campos. O CPF deve ter 11 dígitos. A senha precisa de no mínimo 6 caracteres, 1 letra maiúscula e 1 caractere especial (!@#$%...).")
+
         if submit_cadastrar:
             cpf_limpo = re.sub(r"\D", "", cpf)
 
@@ -346,7 +375,7 @@ elif st.session_state["etapa_fluxo"] == "cadastro_inicial":
             elif len(cpf_limpo) != 11:
                 st.error("O CPF deve conter exatamente 11 dígitos numéricos.")
             elif cpf_limpo in st.session_state["banco_clientes"]:
-                st.error("Este CPF já está cadastrado na plataforma!")
+                st.error("Este CPF já está cadastrado na plataforma! Faça login com seu CPF e senha.")
             elif not validar_senha(senha):
                 st.error("A senha não atende aos requisitos mínimos (6+ caracteres, 1 maiúscula e 1 caractere especial).")
             elif senha != confirmar_senha:
@@ -366,6 +395,48 @@ elif st.session_state["etapa_fluxo"] == "cadastro_inicial":
                 st.success("Cadastro efetuado com sucesso! Faça seu login utilizando seu CPF.")
                 st.session_state["etapa_fluxo"] = "login"
                 st.rerun()
+
+        if st.button("Voltar para o Login", use_container_width=True):
+            st.session_state["etapa_fluxo"] = "login"
+            st.rerun()
+
+# --- 3.1 TELA DE RECUPERAÇÃO DE SENHA ---
+elif st.session_state["etapa_fluxo"] == "recuperar_senha":
+    col1, col2, col3 = st.columns([1, 2, 1])
+
+    with col2:
+        if LOGO_EXISTE:
+            img_col1, img_col2, img_col3 = st.columns([1, 1, 1])
+            with img_col2:
+                st.image(CAMINHO_LOGO, use_container_width=True)
+
+        st.markdown(
+            "<h2 style='text-align: center;'>Recuperar Senha</h2>",
+            unsafe_allow_html=True,
+        )
+        st.markdown(
+            "<p class='subtitulo-cinza' style='text-align: center; margin-bottom: 1.5rem;'>Informe seu CPF e e-mail para redefinir sua senha</p>",
+            unsafe_allow_html=True,
+        )
+
+        with st.form("form_recuperar_senha"):
+            cpf_rec = st.text_input("CPF", placeholder="Digite apenas os 11 números do CPF")
+            email_rec = st.text_input("E-mail", placeholder="seuemail@exemplo.com")
+            submit_recuperar = st.form_submit_button("Enviar Link de Redefinição", use_container_width=True)
+
+        if submit_recuperar:
+            cpf_rec_limpo = re.sub(r"\D", "", cpf_rec)
+            if not cpf_rec_limpo or len(cpf_rec_limpo) != 11:
+                st.error("Digite um CPF válido com 11 dígitos.")
+            elif cpf_rec_limpo not in st.session_state["banco_clientes"]:
+                st.error("CPF não encontrado no sistema.")
+            else:
+                usuario = st.session_state["banco_clientes"][cpf_rec_limpo]
+                if usuario.get("email", "") != email_rec:
+                    st.error("O e-mail informado não corresponde ao cadastrado.")
+                else:
+                    st.success("Um link de redefinição de senha foi enviado para seu e-mail!")
+                    st.info("Para esta demonstração, sua senha padrão é: **Senha@123**")
 
         if st.button("Voltar para o Login", use_container_width=True):
             st.session_state["etapa_fluxo"] = "login"
