@@ -16,6 +16,9 @@ ARQUIVO_BANCO_CLIENTES = os.path.join(DIRETORIO_ATUAL, "banco_clientes.json")
 
 CAMINHO_LOGO = os.path.join(DIRETORIO_ATUAL, "logo.png")
 LOGO_EXISTE = os.path.exists(CAMINHO_LOGO)
+if not LOGO_EXISTE:
+    CAMINHO_LOGO = "logo.png"
+    LOGO_EXISTE = True
 
 URL_SIDEBAR = "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&q=80"
 
