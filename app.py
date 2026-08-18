@@ -14,20 +14,17 @@ def hash_senha(senha: str) -> str:
 DIRETORIO_ATUAL = os.path.dirname(os.path.abspath(__file__))
 ARQUIVO_BANCO_CLIENTES = os.path.join(DIRETORIO_ATUAL, "banco_clientes.json")
 
-CAMINHO_LOGO = os.path.join(DIRETORIO_ATUAL, "logo_G&G.png")
-CAMINHO_SIDEBAR = os.path.join(DIRETORIO_ATUAL, "Barra_lateral.png")
+URL_LOGO = "https://i.imgur.com/8K7b2dD.png"
 
-def buscar_imagem(nome_base):
-    for arquivo in os.listdir(DIRETORIO_ATUAL):
-        if nome_base.lower() in arquivo.lower() and arquivo.endswith((".png", ".jpg", ".jpeg")):
-            return os.path.join(DIRETORIO_ATUAL, arquivo)
-    return ""
+URL_SIDEBAR = "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&q=80"
 
-CAMINHO_BOSQUE = buscar_imagem("bosque")
-CAMINHO_PALMEIRAS = buscar_imagem("palmeira") or buscar_imagem("jardim")
-CAMINHO_VISTA = buscar_imagem("vista")
+URL_BANNER = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&q=80"
 
-LOGO_EXISTE = os.path.exists(CAMINHO_LOGO)
+URL_BOSQUE = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80"
+URL_PALMEIRAS = "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=600&q=80"
+URL_VISTA = "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&q=80"
+
+LOGO_EXISTE = True
 
 
 # --- PERSISTÊNCIA DE DADOS EM ARQUIVO LOCAL (JSON) ---
@@ -103,7 +100,7 @@ st.set_page_config(
     layout="wide",
 )
 
-sidebar_bg_base64 = get_image_base64(CAMINHO_SIDEBAR)
+sidebar_bg_base64 = URL_SIDEBAR
 eh_tela_inicial = st.session_state["etapa_fluxo"] in ["login", "cadastro_inicial"]
 
 if eh_tela_inicial:
@@ -169,7 +166,7 @@ st.markdown(
         [data-testid="stSidebar"] {{
             display: {"none" if eh_tela_inicial else "block"} !important;
             background-image: url("{sidebar_bg_base64}");
-            background-size: 100% 100% !important;
+            background-size: cover !important;
             background-position: top center !important;
             background-repeat: no-repeat !important;
             min-width: 320px !important;
@@ -257,7 +254,7 @@ if st.session_state["etapa_fluxo"] == "login":
         if LOGO_EXISTE:
             img_col1, img_col2, img_col3 = st.columns([1, 1, 1])
             with img_col2:
-                st.image(CAMINHO_LOGO, use_container_width=True)
+                st.image(URL_LOGO, use_container_width=True)
 
         st.markdown(
             "<h2 style='text-align: center;'>Acesso ao Sistema</h2>",
@@ -311,7 +308,7 @@ elif st.session_state["etapa_fluxo"] == "cadastro_inicial":
         if LOGO_EXISTE:
             img_col1, img_col2, img_col3 = st.columns([1, 1, 1])
             with img_col2:
-                st.image(CAMINHO_LOGO, use_container_width=True)
+                st.image(URL_LOGO, use_container_width=True)
 
         st.markdown(
             "<h2 style='text-align: center;'>Cadastro de Novo Cliente</h2>",
@@ -364,8 +361,19 @@ elif st.session_state["etapa_fluxo"] == "cadastro_inicial":
 
 # --- 4. PAINEL GERAL ---
 elif st.session_state["etapa_fluxo"] == "painel_geral":
-    st.markdown("<h1>Sua casa a um passo de você</h1>", unsafe_allow_html=True)
-    st.markdown("<p class='subtitulo-cinza' style='font-size: 1rem; font-weight: 500;'>Encontre o lar perfeito para criar as melhores memórias com quem você ama.</p>", unsafe_allow_html=True)
+    st.markdown(
+        f"""
+        <div style='background-image: url("{URL_BANNER}"); background-size: cover; background-position: center;
+                     height: 280px; border-radius: 16px; display: flex; align-items: center;
+                     justify-content: center; margin-bottom: 2rem; position: relative;'>
+            <div style='background: rgba(0,0,0,0.5); padding: 2rem 3rem; border-radius: 12px; text-align: center;'>
+                <h1 style='color: #FFFFFF; margin: 0; font-size: 2.4rem;'>Sua casa a um passo de você</h1>
+                <p style='color: #E2E8F0; font-size: 1.1rem; margin-top: 0.5rem;'>Encontre o lar perfeito para criar as melhores memórias com quem você ama.</p>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
     st.markdown("<p class='subtitulo-cinza' style='font-size: 0.95rem; margin-bottom: 2rem;'>Bem-vindo ao sistema de gestão imobiliária G&G Imóveis.</p>", unsafe_allow_html=True)
 
     st.markdown("<h3>Oportunidades e Destaques da Semana</h3>", unsafe_allow_html=True)
@@ -376,7 +384,7 @@ elif st.session_state["etapa_fluxo"] == "painel_geral":
         st.markdown(
             f"""
             <div class="card-imovel">
-                {"<img src='" + get_image_base64(CAMINHO_BOSQUE) + "' style='width:100%; height:280px; object-fit:cover; border-radius:8px; margin-bottom:12px;' />" if CAMINHO_BOSQUE else ""}
+                <img src='{URL_BOSQUE}' style='width:100%; height:220px; object-fit:cover; border-radius:8px; margin-bottom:12px;' />
                 <h4 style="margin-top:0; font-size:1.1rem; font-weight:700;">Residencial Bosque Imperial</h4>
                 <p class='subtitulo-cinza' style='font-size:0.85rem; font-style:italic; margin-bottom:12px;'>Conforto, segurança e área de lazer completa para a família.</p>
                 <p style='color: #0E1D2F !important; font-weight: 800; margin-bottom:0; font-size:0.95rem;'>Valores a partir de R$ 350 mil</p>
@@ -393,7 +401,7 @@ elif st.session_state["etapa_fluxo"] == "painel_geral":
         st.markdown(
             f"""
             <div class="card-imovel">
-                {"<img src='" + get_image_base64(CAMINHO_PALMEIRAS) + "' style='width:100%; height:280px; object-fit:cover; border-radius:8px; margin-bottom:12px;' />" if CAMINHO_PALMEIRAS else ""}
+                <img src='{URL_PALMEIRAS}' style='width:100%; height:220px; object-fit:cover; border-radius:8px; margin-bottom:12px;' />
                 <h4 style="margin-top:0; font-size:1.1rem; font-weight:700;">Condomínio Jardim das Palmeiras</h4>
                 <p class='subtitulo-cinza' style='font-size:0.85rem; font-style:italic; margin-bottom:12px;'>O lugar ideal para viver seus melhores momentos ao ar livre.</p>
                 <p style='color: #0E1D2F !important; font-weight: 800; margin-bottom:0; font-size:0.95rem;'>Valores a partir de R$ 220 mil</p>
@@ -410,7 +418,7 @@ elif st.session_state["etapa_fluxo"] == "painel_geral":
         st.markdown(
             f"""
             <div class="card-imovel">
-                {"<img src='" + get_image_base64(CAMINHO_VISTA) + "' style='width:100%; height:280px; object-fit:cover; border-radius:8px; margin-bottom:12px;' />" if CAMINHO_VISTA else ""}
+                <img src='{URL_VISTA}' style='width:100%; height:220px; object-fit:cover; border-radius:8px; margin-bottom:12px;' />
                 <h4 style="margin-top:0; font-size:1.1rem; font-weight:700;">Residencial Vista Verde</h4>
                 <p class='subtitulo-cinza' style='font-size:0.85rem; font-style:italic; margin-bottom:12px;'>Seu novo lar cercado de tranquilidade e natureza.</p>
                 <p style='color: #0E1D2F !important; font-weight: 800; margin-bottom:12px; font-size:0.95rem;'>Valores a partir de R$ 185 mil</p>
