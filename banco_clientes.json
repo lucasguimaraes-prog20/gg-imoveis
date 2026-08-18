@@ -1,0 +1,11 @@
+{
+    "12345678900": {
+        "cpf": "12345678900",
+        "nome": "Cliente Exemplo",
+        "email": "cliente@email.com",
+        "telefone": "(82) 99999-9999",
+        "nascimento": "1990-01-01",
+        "renda": 3000.0,
+        "senha": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3"
+    }
+}
