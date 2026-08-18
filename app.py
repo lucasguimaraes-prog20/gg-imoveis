@@ -25,8 +25,6 @@ URL_BOSQUE = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600
 URL_PALMEIRAS = "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=600&q=80"
 URL_VISTA = "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&q=80"
 
-LOGO_EXISTE = True
-
 
 # --- PERSISTÊNCIA DE DADOS EM ARQUIVO LOCAL (JSON) ---
 def carregar_clientes_disco():
