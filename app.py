@@ -261,7 +261,57 @@ st.markdown(
         [data-testid="stForm"] p:last-child {{
             display: none !important;
         }}
+
+        [data-testid="stFormSubmitHelp"] p {{
+            display: none !important;
+        }}
+
+        div[data-testid="stForm"] > div:last-child > div:last-child {{
+            display: none !important;
+        }}
+
+        p:has(> span[style]) {{
+            display: none !important;
+        }}
+
+        .stForm [data-testid="stMarkdownContainer"] p {{
+            font-size: 0px !important;
+        }}
+
+        .stForm [data-testid="stMarkdownContainer"] p::after {{
+            content: "Pressione Enter para enviar" !important;
+            font-size: 0.8rem !important;
+            color: {sub_color} !important;
+        }}
     </style>
+    """,
+    unsafe_allow_html=True,
+)
+
+st.markdown(
+    """
+    <script>
+        function traduzirForm() {
+            var allElements = document.querySelectorAll('span, p, small, div');
+            for (var i = 0; i < allElements.length; i++) {
+                var el = allElements[i];
+                if (el.textContent.includes('Press Enter to submit form')) {
+                    el.textContent = el.textContent.replace('Press Enter to submit form', 'Pressione Enter para enviar');
+                }
+                if (el.textContent.includes('Press Enter')) {
+                    el.textContent = el.textContent.replace('Press Enter', 'Pressione Enter');
+                }
+                if (el.textContent.includes('Submit form')) {
+                    el.textContent = el.textContent.replace('Submit form', 'Enviar');
+                }
+            }
+        }
+        traduzirForm();
+        setTimeout(traduzirForm, 1000);
+        setTimeout(traduzirForm, 3000);
+        setTimeout(traduzirForm, 5000);
+        setInterval(traduzirForm, 2000);
+    </script>
     """,
     unsafe_allow_html=True,
 )
