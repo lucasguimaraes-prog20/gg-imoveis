@@ -259,16 +259,16 @@ if st.session_state["etapa_fluxo"] == "login":
             "<h2 style='text-align: center;'>Acesso ao Sistema</h2>",
             unsafe_allow_html=True,
         )
+        st.markdown(
+            "<p class='subtitulo-cinza' style='text-align: center; margin-bottom: 1.5rem;'>Entre com seus dados para acessar o painel</p>",
+            unsafe_allow_html=True,
+        )
 
         with st.form("form_login"):
             cpf = st.text_input("CPF do Cliente", placeholder="Digite apenas os 11 números do seu CPF", key="login_cpf")
             senha = st.text_input("Senha", type="password", placeholder="Digite sua senha", key="login_senha")
 
-            btn_col1, btn_col2 = st.columns(2)
-            with btn_col1:
-                submit_login = st.form_submit_button("Entrar", use_container_width=True)
-            with btn_col2:
-                submit_cancelar = st.form_submit_button("Cancelar", use_container_width=True)
+            submit_login = st.form_submit_button("Entrar", use_container_width=True)
 
         if submit_login:
             cpf_limpo = re.sub(r"\D", "", cpf)
@@ -286,18 +286,24 @@ if st.session_state["etapa_fluxo"] == "login":
             else:
                 st.error("CPF não cadastrado no sistema!")
 
-        if submit_cancelar:
-            for chave in ("login_cpf", "login_senha"):
-                if chave in st.session_state:
-                    del st.session_state[chave]
-            st.rerun()
-
         st.divider()
 
-        st.write("Não possui conta?")
-        if st.button("Me cadastrar", use_container_width=True):
-            st.session_state["etapa_fluxo"] = "cadastro_inicial"
-            st.rerun()
+        st.markdown("<p style='text-align: center;'>Não possui conta?</p>", unsafe_allow_html=True)
+
+        btn_cad_col1, btn_cad_col2, btn_cad_col3 = st.columns([1, 2, 1])
+        with btn_cad_col2:
+            if st.button("Criar Minha Conta", use_container_width=True):
+                st.session_state["etapa_fluxo"] = "cadastro_inicial"
+                st.rerun()
+
+        st.markdown("<div style='height: 1rem;'></div>", unsafe_allow_html=True)
+
+        st.markdown("<p style='text-align: center; font-size: 0.85rem;'>Ou acesse como visitante</p>", unsafe_allow_html=True)
+        btn_vis_col1, btn_vis_col2, btn_vis_col3 = st.columns([1, 2, 1])
+        with btn_vis_col2:
+            if st.button("Entrar como Visitante", use_container_width=True):
+                st.session_state["etapa_fluxo"] = "painel_geral"
+                st.rerun()
 
 # --- 3. TELA DE CADASTRO INICIAL DO CLIENTE ---
 elif st.session_state["etapa_fluxo"] == "cadastro_inicial":
@@ -313,6 +319,10 @@ elif st.session_state["etapa_fluxo"] == "cadastro_inicial":
             "<h2 style='text-align: center;'>Cadastro de Novo Cliente</h2>",
             unsafe_allow_html=True,
         )
+        st.markdown(
+            "<p class='subtitulo-cinza' style='text-align: center; margin-bottom: 1.5rem;'>Preencha seus dados para criar sua conta</p>",
+            unsafe_allow_html=True,
+        )
 
         with st.form("form_cadastro"):
             nome = st.text_input("Nome Completo", placeholder="Ex: João da Silva")
@@ -323,7 +333,7 @@ elif st.session_state["etapa_fluxo"] == "cadastro_inicial":
             confirmar_senha = st.text_input("Confirmar Senha", type="password", placeholder="Repita a senha")
 
             st.caption("Requisitos da senha: mínimo de 6 caracteres, 1 caractere especial e 1 letra maiúscula.")
-            submit_cadastrar = st.form_submit_button("Cadastrar", use_container_width=True)
+            submit_cadastrar = st.form_submit_button("Criar Minha Conta", use_container_width=True)
 
         if submit_cadastrar:
             cpf_limpo = re.sub(r"\D", "", cpf)
