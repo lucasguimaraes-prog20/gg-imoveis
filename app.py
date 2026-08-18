@@ -256,7 +256,9 @@ st.markdown(
 
 if not eh_tela_inicial:
     with st.sidebar:
-        st.markdown("<div style='height: 260px;'></div>", unsafe_allow_html=True)
+        if LOGO_EXISTE:
+            st.image(CAMINHO_LOGO, use_container_width=True)
+        st.markdown("<div style='height: 160px;'></div>", unsafe_allow_html=True)
         if st.button("🚪 Sair da Conta", key="btn_logout", use_container_width=True):
             st.session_state["usuario_logado"] = None
             st.session_state["imovel_selecionado"] = None
