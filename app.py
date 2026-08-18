@@ -106,11 +106,11 @@ sidebar_bg_base64 = URL_SIDEBAR
 eh_tela_inicial = st.session_state["etapa_fluxo"] in ["login", "cadastro_inicial"]
 
 if eh_tela_inicial:
-    bg_app = "#0B1221"
+    bg_app = "#000000"
     text_color = "#FFFFFF"
-    card_bg = "#162032"
-    card_border = "1px solid #1E3050"
-    sub_color = "#8899AA"
+    card_bg = "#111111"
+    card_border = "1px solid #222222"
+    sub_color = "#888888"
     btn_bg = "#1B8A8A"
     btn_hover = "#157070"
     btn_text_color = "#FFFFFF"
@@ -166,7 +166,7 @@ st.markdown(
         }}
 
         hr {{
-            border-color: {"#1E3050" if eh_tela_inicial else "#E0E0E0"} !important;
+            border-color: {"#222222" if eh_tela_inicial else "#E0E0E0"} !important;
         }}
 
         [data-testid="stSidebar"] {{
@@ -199,9 +199,9 @@ st.markdown(
         }}
 
         input, textarea, select {{
-            background-color: {"#1A2A40" if eh_tela_inicial else "#FFFFFF"} !important;
+            background-color: {"#111111" if eh_tela_inicial else "#FFFFFF"} !important;
             color: {text_color} !important;
-            border: 1px solid {"#2A3F5F" if eh_tela_inicial else "#CED4DA"} !important;
+            border: 1px solid {"#333333" if eh_tela_inicial else "#CED4DA"} !important;
             border-radius: 6px !important;
         }}
         
@@ -215,7 +215,7 @@ st.markdown(
             -webkit-text-fill-color: {disabled_text_color} !important;
             font-weight: 600 !important;
             opacity: 1 !important;
-            background-color: {"#12202F" if eh_tela_inicial else "#E9ECEF"} !important;
+            background-color: {"#0A0A0A" if eh_tela_inicial else "#E9ECEF"} !important;
         }}
         
         input::placeholder {{
