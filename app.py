@@ -249,6 +249,18 @@ st.markdown(
             text-align: right !important;
             margin-top: 4px !important;
         }}
+
+        small, .stMarkdown small {{
+            display: none !important;
+        }}
+
+        [data-testid="stForm"] small {{
+            display: none !important;
+        }}
+
+        [data-testid="stForm"] p:last-child {{
+            display: none !important;
+        }}
     </style>
     """,
     unsafe_allow_html=True,
