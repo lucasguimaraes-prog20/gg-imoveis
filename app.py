@@ -14,7 +14,8 @@ def hash_senha(senha: str) -> str:
 DIRETORIO_ATUAL = os.path.dirname(os.path.abspath(__file__))
 ARQUIVO_BANCO_CLIENTES = os.path.join(DIRETORIO_ATUAL, "banco_clientes.json")
 
-URL_LOGO = "https://i.imgur.com/8K7b2dD.png"
+CAMINHO_LOGO = os.path.join(DIRETORIO_ATUAL, "logo.png")
+LOGO_EXISTE = os.path.exists(CAMINHO_LOGO)
 
 URL_SIDEBAR = "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&q=80"
 
@@ -254,7 +255,7 @@ if st.session_state["etapa_fluxo"] == "login":
         if LOGO_EXISTE:
             img_col1, img_col2, img_col3 = st.columns([1, 1, 1])
             with img_col2:
-                st.image(URL_LOGO, use_container_width=True)
+                st.image(CAMINHO_LOGO, use_container_width=True)
 
         st.markdown(
             "<h2 style='text-align: center;'>Acesso ao Sistema</h2>",
@@ -308,7 +309,7 @@ elif st.session_state["etapa_fluxo"] == "cadastro_inicial":
         if LOGO_EXISTE:
             img_col1, img_col2, img_col3 = st.columns([1, 1, 1])
             with img_col2:
-                st.image(URL_LOGO, use_container_width=True)
+                st.image(CAMINHO_LOGO, use_container_width=True)
 
         st.markdown(
             "<h2 style='text-align: center;'>Cadastro de Novo Cliente</h2>",
