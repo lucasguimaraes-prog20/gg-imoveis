@@ -106,13 +106,13 @@ sidebar_bg_base64 = URL_SIDEBAR
 eh_tela_inicial = st.session_state["etapa_fluxo"] in ["login", "cadastro_inicial"]
 
 if eh_tela_inicial:
-    bg_app = "#0E1726"
+    bg_app = "#0B1221"
     text_color = "#FFFFFF"
-    card_bg = "#1A2638"
-    card_border = "1px solid #2D3748"
-    sub_color = "#A0AEC0"
-    btn_bg = "#2B6CB0"
-    btn_hover = "#3182CE"
+    card_bg = "#162032"
+    card_border = "1px solid #1E3050"
+    sub_color = "#8899AA"
+    btn_bg = "#1B8A8A"
+    btn_hover = "#157070"
     btn_text_color = "#FFFFFF"
     disabled_text_color = "#FFFFFF"
 else:
