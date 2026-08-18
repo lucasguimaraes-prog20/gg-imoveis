@@ -156,13 +156,17 @@ st.markdown(
             color: {text_color} !important;
         }}
 
-        h2, h4, h5, h6, p, span, label {{
+        h2, h4, h5, h6, p, span, label, div[data-testid="stMarkdownContainer"] p {{
             color: {text_color} !important;
         }}
         
         .subtitulo-cinza {{
             color: {sub_color} !important;
             margin-bottom: 0.3rem !important;
+        }}
+
+        hr {{
+            border-color: {"#1E3050" if eh_tela_inicial else "#E0E0E0"} !important;
         }}
 
         [data-testid="stSidebar"] {{
@@ -179,7 +183,6 @@ st.markdown(
             display: none !important;
         }}
 
-        /* Card Original do Print */
         .card-imovel {{
             background-color: {card_bg} !important;
             padding: 16px;
@@ -188,11 +191,23 @@ st.markdown(
             box-shadow: {"0px 4px 12px rgba(0, 0, 0, 0.05)" if not eh_tela_inicial else "none"};
         }}
 
-        input {{
-            background-color: {"#263345" if eh_tela_inicial else "#FFFFFF"} !important;
+        [data-testid="stForm"] {{
+            background-color: {card_bg} !important;
+            padding: 1.5rem !important;
+            border-radius: 12px !important;
+            border: {card_border} !important;
+        }}
+
+        input, textarea, select {{
+            background-color: {"#1A2A40" if eh_tela_inicial else "#FFFFFF"} !important;
             color: {text_color} !important;
-            border: 1px solid {"#4A5568" if eh_tela_inicial else "#CED4DA"} !important;
+            border: 1px solid {"#2A3F5F" if eh_tela_inicial else "#CED4DA"} !important;
             border-radius: 6px !important;
+        }}
+        
+        input:focus, textarea:focus, select:focus {{
+            border-color: {btn_bg} !important;
+            box-shadow: 0 0 0 2px {"rgba(27,138,138,0.3)" if eh_tela_inicial else "rgba(43,108,176,0.3)"} !important;
         }}
         
         input:disabled {{
@@ -200,7 +215,7 @@ st.markdown(
             -webkit-text-fill-color: {disabled_text_color} !important;
             font-weight: 600 !important;
             opacity: 1 !important;
-            background-color: {"#1A2638" if eh_tela_inicial else "#E9ECEF"} !important;
+            background-color: {"#12202F" if eh_tela_inicial else "#E9ECEF"} !important;
         }}
         
         input::placeholder {{
