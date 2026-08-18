@@ -508,19 +508,6 @@ elif st.session_state["etapa_fluxo"] == "recuperar_senha":
 
 # --- 4. PAINEL GERAL ---
 elif st.session_state["etapa_fluxo"] == "painel_geral":
-    st.markdown(
-        f"""
-        <div style='background-image: url("{URL_BANNER}"); background-size: cover; background-position: center;
-                     height: 280px; border-radius: 16px; display: flex; align-items: center;
-                     justify-content: center; margin-bottom: 2rem; position: relative;'>
-            <div style='background: rgba(0,0,0,0.35); padding: 2rem 3rem; border-radius: 12px; text-align: center;'>
-                <h1 style='color: #FFFFFF; margin: 0; font-size: 2.4rem; font-weight: 800; letter-spacing: -0.5px; line-height: 1.3;'>Sua casa a um passo de você</h1>
-                <p style='color: #FFFFFF; font-size: 1.1rem; margin-top: 0.5rem; font-weight: 400; letter-spacing: 0.3px;'>Encontre o lar perfeito para criar as melhores memórias com quem você ama.</p>
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
     st.markdown("<p class='subtitulo-cinza' style='font-size: 0.95rem; margin-bottom: 2rem;'>Bem-vindo ao sistema de gestão imobiliária G&G Imóveis.</p>", unsafe_allow_html=True)
 
     st.markdown("<h3>Oportunidades e Destaques da Semana</h3>", unsafe_allow_html=True)
