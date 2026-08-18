@@ -22,7 +22,7 @@ if not LOGO_EXISTE:
 
 URL_SIDEBAR = "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&q=80"
 
-URL_BANNER = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&q=80"
+URL_BANNER = "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200&q=80"
 
 URL_BOSQUE = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80"
 URL_PALMEIRAS = "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=600&q=80"
@@ -448,14 +448,12 @@ elif st.session_state["etapa_fluxo"] == "recuperar_senha":
 elif st.session_state["etapa_fluxo"] == "painel_geral":
     st.markdown(
         f"""
-        <div style='background-image: linear-gradient(135deg, rgba(14,23,38,0.85), rgba(43,108,176,0.7)), url("{URL_BANNER}"); background-size: cover; background-position: center;
-                     min-height: 320px; border-radius: 16px; display: flex; align-items: center;
-                     justify-content: center; margin-bottom: 2.5rem; position: relative; box-shadow: 0 8px 32px rgba(0,0,0,0.3);'>
-            <div style='padding: 2.5rem 4rem; text-align: center;'>
-                <p style='color: #FF9F1C; font-size: 0.9rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 0.8rem;'>G&G Imóveis</p>
-                <h1 style='color: #FFFFFF; margin: 0; font-size: 2.8rem; font-weight: 800; line-height: 1.2; text-shadow: 0 2px 8px rgba(0,0,0,0.3);'>Sua casa a um passo de você</h1>
-                <div style='width: 80px; height: 4px; background: #FF9F1C; margin: 1rem auto; border-radius: 2px;'></div>
-                <p style='color: #E2E8F0; font-size: 1.15rem; margin-top: 0.5rem; max-width: 500px; margin-left: auto; margin-right: auto; line-height: 1.6;'>Encontre o lar perfeito para criar as melhores memórias com quem você ama.</p>
+        <div style='background-image: url("{URL_BANNER}"); background-size: cover; background-position: center;
+                     height: 280px; border-radius: 16px; display: flex; align-items: center;
+                     justify-content: center; margin-bottom: 2rem; position: relative;'>
+            <div style='background: rgba(0,0,0,0.35); padding: 2rem 3rem; border-radius: 12px; text-align: center;'>
+                <h1 style='color: #FFFFFF; margin: 0; font-size: 2.4rem;'>Sua casa a um passo de você</h1>
+                <p style='color: #E2E8F0; font-size: 1.1rem; margin-top: 0.5rem;'>Encontre o lar perfeito para criar as melhores memórias com quem você ama.</p>
             </div>
         </div>
         """,
@@ -463,23 +461,18 @@ elif st.session_state["etapa_fluxo"] == "painel_geral":
     )
     st.markdown("<p class='subtitulo-cinza' style='font-size: 0.95rem; margin-bottom: 2rem;'>Bem-vindo ao sistema de gestão imobiliária G&G Imóveis.</p>", unsafe_allow_html=True)
 
-    st.markdown("<h3 style='margin-bottom: 1.5rem;'>Oportunidades e Destaques da Semana</h3>", unsafe_allow_html=True)
+    st.markdown("<h3>Oportunidades e Destaques da Semana</h3>", unsafe_allow_html=True)
 
     col_img1, col_img2, col_img3 = st.columns(3)
 
     with col_img1:
         st.markdown(
             f"""
-            <div class="card-imovel" style='overflow: hidden; transition: transform 0.3s; cursor: pointer;'>
+            <div class="card-imovel">
                 <img src='{URL_BOSQUE}' style='width:100%; height:220px; object-fit:cover; border-radius:8px; margin-bottom:12px;' />
-                <h4 style="margin-top:0; font-size:1.15rem; font-weight:700;">Residencial Bosque Imperial</h4>
+                <h4 style="margin-top:0; font-size:1.1rem; font-weight:700;">Residencial Bosque Imperial</h4>
                 <p class='subtitulo-cinza' style='font-size:0.85rem; font-style:italic; margin-bottom:12px;'>Conforto, segurança e área de lazer completa para a família.</p>
-                <div style='display:flex; gap:8px; margin-bottom:8px;'>
-                    <span style='background:#E8F0FE; color:#2B6CB0; padding:3px 8px; border-radius:4px; font-size:0.75rem; font-weight:600;'>3 Quartos</span>
-                    <span style='background:#E8F0FE; color:#2B6CB0; padding:3px 8px; border-radius:4px; font-size:0.75rem; font-weight:600;'>2 Banheiros</span>
-                    <span style='background:#E8F0FE; color:#2B6CB0; padding:3px 8px; border-radius:4px; font-size:0.75rem; font-weight:600;'>2 Vagas</span>
-                </div>
-                <p style='color: #FF9F1C !important; font-weight: 800; margin-bottom:0; font-size:1.1rem;'>R$ 350.000,00</p>
+                <p style='color: #0E1D2F !important; font-weight: 800; margin-bottom:0; font-size:0.95rem;'>Valores a partir de R$ 350 mil</p>
             </div>
             """,
             unsafe_allow_html=True,
@@ -492,16 +485,11 @@ elif st.session_state["etapa_fluxo"] == "painel_geral":
     with col_img2:
         st.markdown(
             f"""
-            <div class="card-imovel" style='overflow: hidden; transition: transform 0.3s; cursor: pointer;'>
+            <div class="card-imovel">
                 <img src='{URL_PALMEIRAS}' style='width:100%; height:220px; object-fit:cover; border-radius:8px; margin-bottom:12px;' />
-                <h4 style="margin-top:0; font-size:1.15rem; font-weight:700;">Condomínio Jardim das Palmeiras</h4>
+                <h4 style="margin-top:0; font-size:1.1rem; font-weight:700;">Condomínio Jardim das Palmeiras</h4>
                 <p class='subtitulo-cinza' style='font-size:0.85rem; font-style:italic; margin-bottom:12px;'>O lugar ideal para viver seus melhores momentos ao ar livre.</p>
-                <div style='display:flex; gap:8px; margin-bottom:8px;'>
-                    <span style='background:#E8F0FE; color:#2B6CB0; padding:3px 8px; border-radius:4px; font-size:0.75rem; font-weight:600;'>2 Quartos</span>
-                    <span style='background:#E8F0FE; color:#2B6CB0; padding:3px 8px; border-radius:4px; font-size:0.75rem; font-weight:600;'>1 Banheiro</span>
-                    <span style='background:#E8F0FE; color:#2B6CB0; padding:3px 8px; border-radius:4px; font-size:0.75rem; font-weight:600;'>1 Vaga</span>
-                </div>
-                <p style='color: #FF9F1C !important; font-weight: 800; margin-bottom:0; font-size:1.1rem;'>R$ 220.000,00</p>
+                <p style='color: #0E1D2F !important; font-weight: 800; margin-bottom:0; font-size:0.95rem;'>Valores a partir de R$ 220 mil</p>
             </div>
             """,
             unsafe_allow_html=True,
@@ -514,16 +502,11 @@ elif st.session_state["etapa_fluxo"] == "painel_geral":
     with col_img3:
         st.markdown(
             f"""
-            <div class="card-imovel" style='overflow: hidden; transition: transform 0.3s; cursor: pointer;'>
+            <div class="card-imovel">
                 <img src='{URL_VISTA}' style='width:100%; height:220px; object-fit:cover; border-radius:8px; margin-bottom:12px;' />
-                <h4 style="margin-top:0; font-size:1.15rem; font-weight:700;">Residencial Vista Verde</h4>
+                <h4 style="margin-top:0; font-size:1.1rem; font-weight:700;">Residencial Vista Verde</h4>
                 <p class='subtitulo-cinza' style='font-size:0.85rem; font-style:italic; margin-bottom:12px;'>Seu novo lar cercado de tranquilidade e natureza.</p>
-                <div style='display:flex; gap:8px; margin-bottom:8px;'>
-                    <span style='background:#E8F0FE; color:#2B6CB0; padding:3px 8px; border-radius:4px; font-size:0.75rem; font-weight:600;'>2 Quartos</span>
-                    <span style='background:#E8F0FE; color:#2B6CB0; padding:3px 8px; border-radius:4px; font-size:0.75rem; font-weight:600;'>1 Banheiro</span>
-                    <span style='background:#E8F0FE; color:#2B6CB0; padding:3px 8px; border-radius:4px; font-size:0.75rem; font-weight:600;'>1 Vaga</span>
-                </div>
-                <p style='color: #FF9F1C !important; font-weight: 800; margin-bottom:0; font-size:1.1rem;'>R$ 185.000,00</p>
+                <p style='color: #0E1D2F !important; font-weight: 800; margin-bottom:12px; font-size:0.95rem;'>Valores a partir de R$ 185 mil</p>
             </div>
             """,
             unsafe_allow_html=True,
