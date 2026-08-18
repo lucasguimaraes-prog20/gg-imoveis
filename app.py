@@ -354,14 +354,14 @@ if st.session_state["etapa_fluxo"] == "login":
 
             submit_login = st.form_submit_button("Entrar", use_container_width=True)
 
-        esq_col1, esq_col2 = st.columns([2, 1])
-        with esq_col2:
-            if st.button("Esqueceu a senha?", key="btn_esqueci_senha"):
+        esq_col1, esq_col2 = st.columns(2)
+        with esq_col1:
+            if st.button("Esqueceu a senha?", key="btn_esqueci_senha", use_container_width=True):
                 st.session_state["etapa_fluxo"] = "recuperar_senha"
                 st.rerun()
-
-        if st.button("Preciso de Ajuda", key="btn_ajuda_login"):
-            st.info("Use seu CPF (11 dígitos) e a senha cadastrada para acessar. Se esqueceu a senha, clique em 'Esqueceu a senha?'.")
+        with esq_col2:
+            if st.button("Preciso de Ajuda", key="btn_ajuda_login", use_container_width=True):
+                st.info("Use seu CPF (11 dígitos) e a senha cadastrada para acessar. Se esqueceu a senha, clique em 'Esqueceu a senha?'.")
 
         if submit_login:
             cpf_limpo = re.sub(r"\D", "", cpf)
