@@ -122,11 +122,11 @@ eh_tela_inicial = st.session_state["etapa_fluxo"] in ["login", "cadastro_inicial
 if eh_tela_inicial:
     bg_app = "#000000"
     text_color = "#FFFFFF"
-    card_bg = "#111111"
-    card_border = "1px solid #222222"
-    sub_color = "#888888"
-    btn_bg = "#1B8A8A"
-    btn_hover = "#157070"
+    card_bg = "#0D0D1A"
+    card_border = "1px solid #202060"
+    sub_color = "#9999AA"
+    btn_bg = "#402080"
+    btn_hover = "#5030A0"
     btn_text_color = "#FFFFFF"
     disabled_text_color = "#FFFFFF"
 else:
@@ -221,7 +221,7 @@ st.markdown(
         
         input:focus, textarea:focus, select:focus {{
             border-color: {btn_bg} !important;
-            box-shadow: 0 0 0 2px {"rgba(27,138,138,0.3)" if eh_tela_inicial else "rgba(43,108,176,0.3)"} !important;
+            box-shadow: 0 0 0 2px {"rgba(64,32,128,0.3)" if eh_tela_inicial else "rgba(43,108,176,0.3)"} !important;
         }}
         
         input:disabled {{
