@@ -151,7 +151,7 @@ st.markdown(
         }}
 
         .stApp {{
-            background-color: {bg_app} !important;
+            background: linear-gradient(180deg, #000000 0%, #1A0033 50%, #0D0D1A 100%) !important;
             color: {text_color} !important;
         }}
         
