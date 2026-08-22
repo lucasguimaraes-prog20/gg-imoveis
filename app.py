@@ -4,6 +4,7 @@ import json
 import os
 import re
 import streamlit as st
+from streamlit.components.v1 import html as st_html
 
 
 def hash_senha(senha: str) -> str:
@@ -143,6 +144,8 @@ else:
 st.markdown(
     f"""
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
         .block-container {{
             padding-top: 2rem !important;
             padding-bottom: 2rem !important;
@@ -151,7 +154,7 @@ st.markdown(
         }}
 
         .stApp {{
-            background: linear-gradient(180deg, #000000 0%, #1A0033 50%, #0D0D1A 100%) !important;
+            background: radial-gradient(ellipse at 50% 0%, #1a0f2e 0%, #0a0612 45%, #000000 100%) !important;
             color: {text_color} !important;
         }}
         
@@ -312,6 +315,122 @@ st.markdown(
             font-size: 0.8rem !important;
             color: {sub_color} !important;
         }}
+
+        .login-glow-orb {{
+            position: fixed !important;
+            border-radius: 50% !important;
+            filter: blur(120px) !important;
+            pointer-events: none !important;
+            z-index: 0 !important;
+        }}
+
+        .login-container {{
+            position: relative !important;
+            z-index: 1 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            min-height: 80vh !important;
+        }}
+
+        .login-card {{
+            background: linear-gradient(135deg, rgba(18, 10, 40, 0.7), rgba(25, 12, 55, 0.6)) !important;
+            backdrop-filter: blur(24px) !important;
+            -webkit-backdrop-filter: blur(24px) !important;
+            border: 1px solid rgba(147, 51, 234, 0.35) !important;
+            border-radius: 24px !important;
+            padding: 44px 48px !important;
+            width: 100% !important;
+            max-width: 480px !important;
+            box-shadow: 0 8px 32px rgba(124, 58, 237, 0.15), 0 0 60px rgba(124, 58, 237, 0.08) !important;
+        }}
+
+        .login-card input[type="text"],
+        .login-card input[type="password"] {{
+            width: 100% !important;
+            padding: 18px 22px !important;
+            border: 1.5px solid rgba(147, 51, 234, 0.4) !important;
+            border-radius: 14px !important;
+            background: rgba(18, 10, 40, 0.5) !important;
+            color: #e0d4f5 !important;
+            font-size: 16px !important;
+            font-family: 'Inter', sans-serif !important;
+            outline: none !important;
+            transition: all 0.3s ease !important;
+            box-sizing: border-box !important;
+            margin-bottom: 16px !important;
+        }}
+
+        .login-card input:focus {{
+            border-color: rgba(147, 51, 234, 0.6) !important;
+            box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.12) !important;
+        }}
+
+        .login-card input::placeholder {{
+            color: #7860a0 !important;
+        }}
+
+        .login-card label {{
+            display: block !important;
+            font-size: 14px !important;
+            font-weight: 500 !important;
+            color: #a890d4 !important;
+            margin-bottom: 8px !important;
+            font-family: 'Inter', sans-serif !important;
+        }}
+
+        .login-btn-primary {{
+            width: 100% !important;
+            padding: 18px !important;
+            background: linear-gradient(135deg, #7c3aed, #a855f7, #4ade80) !important;
+            border: none !important;
+            border-radius: 14px !important;
+            color: white !important;
+            font-size: 17px !important;
+            font-weight: 700 !important;
+            letter-spacing: 1px !important;
+            cursor: pointer !important;
+            transition: all 0.3s ease !important;
+            font-family: 'Inter', sans-serif !important;
+            margin-top: 8px !important;
+        }}
+
+        .login-btn-primary:hover {{
+            transform: translateY(-2px) !important;
+            box-shadow: 0 8px 24px rgba(91, 33, 182, 0.4) !important;
+        }}
+
+        .login-btn-secondary {{
+            width: 100% !important;
+            padding: 14px !important;
+            background: transparent !important;
+            border: 1.5px solid rgba(147, 51, 234, 0.3) !important;
+            border-radius: 14px !important;
+            color: #c4b5fd !important;
+            font-size: 14px !important;
+            font-weight: 500 !important;
+            cursor: pointer !important;
+            transition: all 0.3s ease !important;
+            font-family: 'Inter', sans-serif !important;
+            margin-bottom: 10px !important;
+        }}
+
+        .login-btn-secondary:hover {{
+            background: rgba(136, 92, 221, 0.1) !important;
+            border-color: rgba(136, 92, 221, 0.4) !important;
+        }}
+
+        .login-gg-text {{
+            font-family: 'Inter', sans-serif !important;
+            font-weight: 900 !important;
+            font-size: 22px !important;
+            letter-spacing: 12px !important;
+            text-align: center !important;
+            margin: 0 0 6px 0 !important;
+            color: #e0d4f5 !important;
+            text-shadow: 0 0 20px rgba(139, 92, 246, 0.4) !important;
+        }}
     </style>
     """,
     unsafe_allow_html=True,
@@ -359,30 +478,90 @@ if not eh_tela_inicial:
 # --- 2. TELA INICIAL: LOGIN ---
 if st.session_state["etapa_fluxo"] == "login":
     st.session_state["banco_clientes"] = carregar_clientes_disco()
-    
-    col1, col2, col3 = st.columns([1, 2, 1])
 
-    with col2:
-        if LOGO_EXISTE:
-            img_col1, img_col2, img_col3 = st.columns([1, 1, 1])
-            with img_col2:
-                st.image(CAMINHO_LOGO, use_container_width=True)
+    st.markdown(
+        """
+        <div class="login-glow-orb" style="width: 600px; height: 600px; background: #7c3aed; opacity: 0.25; top: -200px; left: 300px;"></div>
+        <div class="login-glow-orb" style="width: 500px; height: 500px; background: #22c55e; opacity: 0.15; top: 100px; right: 200px; left: auto;"></div>
+        """,
+        unsafe_allow_html=True,
+    )
 
+    st.markdown(
+        f"""
+        <script>
+            function togglePassword() {{
+                var pwd = document.querySelector('[data-testid="stTextInput"] input[type="password"]');
+                if (!pwd) {{
+                    var allInputs = document.querySelectorAll('input');
+                    for (var i = 0; i < allInputs.length; i++) {{
+                        if (allInputs[i].type === 'password') {{ pwd = allInputs[i]; break; }}
+                    }}
+                }}
+                if (pwd) {{
+                    pwd.type = pwd.type === 'password' ? 'text' : 'password';
+                    var icon = document.getElementById('eye-icon');
+                    if (icon) {{
+                        icon.innerHTML = pwd.type === 'password'
+                            ? '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/>'
+                            : '<path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19M1 1l22 22" fill="none" stroke="currentColor" stroke-width="2"/>';
+                    }}
+                }}
+            }}
+        </script>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    st.markdown('<div class="login-container">', unsafe_allow_html=True)
+
+    if LOGO_EXISTE:
         st.markdown(
-            "<h2 style='text-align: center;'>Acesso ao Sistema</h2>",
+            f"""
+            <div style="text-align: center; margin-bottom: 12px;">
+                <img src="data:image/png;base64,{base64.b64encode(open(CAMINHO_LOGO, 'rb').read()).decode()}"
+                     style="width: 260px; filter: drop-shadow(0 0 30px rgba(139, 92, 246, 0.3));">
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+    st.markdown(
+        """
+        <div style="text-align: center; margin-bottom: 32px;">
+            <div style="font-family: 'Inter', sans-serif; font-weight: 900; font-size: 26px; letter-spacing: 4px; color: #e0d4f5; text-shadow: 0 0 20px rgba(139, 92, 246, 0.3); margin-bottom: 6px;">G<span style="color: #4ade80;">&</span>G</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    center_l, center_c, center_r = st.columns([1, 3, 1])
+    with center_c:
+        st.markdown(
+            "<h2 style='text-align: center; color: #ffffff !important; font-size: 2.6rem !important; font-weight: 800 !important; margin-bottom: 8px !important;'>Acesso ao Sistema</h2>",
             unsafe_allow_html=True,
         )
         st.markdown(
-            "<p class='subtitulo-cinza' style='text-align: center; margin-bottom: 1.5rem;'>Entre com seus dados para acessar o painel</p>",
+            "<p style='text-align: center; color: #b8a8d9 !important; font-size: 1.15rem !important; margin-bottom: 2rem !important;'>Entre com seus dados para acessar o painel</p>",
             unsafe_allow_html=True,
         )
+
+        st.markdown('<div class="login-card">', unsafe_allow_html=True)
 
         with st.form("form_login"):
-            cpf = st.text_input("CPF do Cliente", placeholder="Digite apenas os 11 números do seu CPF", key="login_cpf")
+            cpf = st.text_input("CPF", placeholder="Digite apenas os 11 números do seu CPF", key="login_cpf")
             senha = st.text_input("Senha", type="password", placeholder="Digite sua senha", key="login_senha")
+            submit_login = st.form_submit_button("ENTRAR", use_container_width=True)
 
-            submit_login = st.form_submit_button("Entrar", use_container_width=True)
+        st.markdown('</div>', unsafe_allow_html=True)
 
+        st.markdown(
+            """
+            <div style="display: flex; gap: 12px; margin-top: 16px; margin-bottom: 10px;">
+                <div style="flex: 1;">
+            """,
+            unsafe_allow_html=True,
+        )
         esq_col1, esq_col2 = st.columns(2)
         with esq_col1:
             if st.button("Esqueceu a senha?", key="btn_esqueci_senha", use_container_width=True):
@@ -391,6 +570,7 @@ if st.session_state["etapa_fluxo"] == "login":
         with esq_col2:
             if st.button("Preciso de Ajuda", key="btn_ajuda_login", use_container_width=True):
                 st.info("Use seu CPF (11 dígitos) e a senha cadastrada para acessar. Se esqueceu a senha, clique em 'Esqueceu a senha?'.")
+        st.markdown("</div></div>", unsafe_allow_html=True)
 
         if submit_login:
             cpf_limpo = re.sub(r"\D", "", cpf)
@@ -408,24 +588,27 @@ if st.session_state["etapa_fluxo"] == "login":
             else:
                 st.error("CPF não cadastrado no sistema!")
 
-        st.divider()
-
-        st.markdown("<p style='text-align: center;'>Não possui conta?</p>", unsafe_allow_html=True)
-
+        st.markdown(
+            "<p style='text-align: center; color: #b8a8d9 !important; font-size: 0.95rem !important; margin-top: 1.5rem !important;'>Não possui conta?</p>",
+            unsafe_allow_html=True,
+        )
         btn_cad_col1, btn_cad_col2, btn_cad_col3 = st.columns([1, 2, 1])
         with btn_cad_col2:
-            if st.button("Criar Minha Conta", use_container_width=True):
+            if st.button("Criar Minha Conta", key="btn_criar_conta_login", use_container_width=True):
                 st.session_state["etapa_fluxo"] = "cadastro_inicial"
                 st.rerun()
 
-        st.markdown("<div style='height: 1rem;'></div>", unsafe_allow_html=True)
-
-        st.markdown("<p style='text-align: center; font-size: 0.85rem;'>Ou acesse como visitante</p>", unsafe_allow_html=True)
+        st.markdown(
+            "<p style='text-align: center; color: #b8a8d9 !important; font-size: 0.95rem !important; margin-top: 1rem !important;'>Ou acesse como visitante</p>",
+            unsafe_allow_html=True,
+        )
         btn_vis_col1, btn_vis_col2, btn_vis_col3 = st.columns([1, 2, 1])
         with btn_vis_col2:
-            if st.button("Entrar como Visitante", use_container_width=True):
+            if st.button("Entrar como Visitante", key="btn_visitante_login", use_container_width=True):
                 st.session_state["etapa_fluxo"] = "painel_geral"
                 st.rerun()
+
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # --- 3. TELA DE CADASTRO INICIAL DO CLIENTE ---
 elif st.session_state["etapa_fluxo"] == "cadastro_inicial":
