@@ -563,7 +563,6 @@ elif st.session_state["etapa_fluxo"] == "painel_geral":
         st.markdown("<h3 style='font-size:1rem; margin-bottom:1rem;'>Filtros</h3>", unsafe_allow_html=True)
         faixa_preco = st.slider("Faixa de Preço", 50000, 1000000, (50000, 1000000), step=10000, format="R$ %s")
         quartos_filtro = st.multiselect("Quartos", [1, 2, 3, 4], default=[])
-        vagas_filtro = st.multiselect("Vagas", [0, 1, 2, 3], default=[])
         ordenar = st.selectbox("Ordenar por", ["Menor preço", "Maior preço", "Maior área"])
 
     imoveis_filtrados = LISTA_IMOVEIS[:]
@@ -579,9 +578,6 @@ elif st.session_state["etapa_fluxo"] == "painel_geral":
 
     if quartos_filtro:
         imoveis_filtrados = [i for i in imoveis_filtrados if i["quartos"] in quartos_filtro]
-
-    if vagas_filtro:
-        imoveis_filtrados = [i for i in imoveis_filtrados if i["vagas"] in vagas_filtro]
 
     if preco_max > 0:
         imoveis_filtrados = [i for i in imoveis_filtrados if i["preco"] <= preco_max]
