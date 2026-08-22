@@ -90,10 +90,24 @@ if "imovel_selecionado" not in st.session_state:
 if "etapa_fluxo" not in st.session_state:
     st.session_state["etapa_fluxo"] = "login"
 
+LISTA_IMOVEIS = [
+    {"id": 1, "nome": "Residencial Bosque Imperial", "preco": 350000, "tipo": "Casa", "quartos": 3, "banheiros": 2, "vagas": 2, "area": 140, "bairro": "Bosque Imperial", "cidade": "Maceió", "descricao": "Conforto, segurança e área de lazer completa para a família.", "imagem": URL_BOSQUE},
+    {"id": 2, "nome": "Condomínio Jardim das Palmeiras", "preco": 220000, "tipo": "Apartamento", "quartos": 2, "banheiros": 1, "vagas": 1, "area": 75, "bairro": "Jardim das Palmeiras", "cidade": "Maceió", "descricao": "O lugar ideal para viver seus melhores momentos ao ar livre.", "imagem": URL_PALMEIRAS},
+    {"id": 3, "nome": "Residencial Vista Verde", "preco": 185000, "tipo": "Apartamento", "quartos": 2, "banheiros": 1, "vagas": 1, "area": 68, "bairro": "Vista Verde", "cidade": "Maceió", "descricao": "Seu novo lar cercado de tranquilidade e natureza.", "imagem": URL_VISTA},
+    {"id": 4, "nome": "Casa Jardim Atlântico", "preco": 480000, "tipo": "Casa", "quartos": 4, "banheiros": 3, "vagas": 3, "area": 200, "bairro": "Jardim Atlântico", "cidade": "Maceió", "descricao": "Casa de alto padrão com piscina e churrasqueira.", "imagem": URL_BOSQUE},
+    {"id": 5, "nome": "Apartamento Ponta Verde", "preco": 320000, "tipo": "Apartamento", "quartos": 3, "banheiros": 2, "vagas": 1, "area": 95, "bairro": "Ponta Verde", "cidade": "Maceió", "descricao": "Vista panorâmica do mar, próximo à orla.", "imagem": URL_PALMEIRAS},
+    {"id": 6, "nome": "Cobertura Floresta", "preco": 650000, "tipo": "Cobertura", "quartos": 4, "banheiros": 3, "vagas": 3, "area": 250, "bairro": "Poço", "cidade": "Maceió", "descricao": "Cobertura duplex com varanda gourmet e vista irrepreensível.", "imagem": URL_VISTA},
+    {"id": 7, "nome": "Kitnet Centro", "preco": 95000, "tipo": "Kitnet", "quartos": 1, "banheiros": 1, "vagas": 0, "area": 30, "bairro": "Centro", "cidade": "Maceió", "descricao": "Compacta e funcional, ideal para estudantes e profissionais.", "imagem": URL_BOSQUE},
+    {"id": 8, "nome": "Sobrado Jaraguá", "preco": 290000, "tipo": "Casa", "quartos": 3, "banheiros": 2, "vagas": 2, "area": 120, "bairro": "Jaraguá", "cidade": "Maceió", "descricao": "Sobrado em condomínio fechado com área de lazer.", "imagem": URL_PALMEIRAS},
+    {"id": 9, "nome": "Flat Beira Mar", "preco": 150000, "tipo": "Flat", "quartos": 1, "banheiros": 1, "vagas": 1, "area": 45, "bairro": "Jatiúca", "cidade": "Maceió", "descricao": "Próximo da praia, ideal para temporada ou moradia.", "imagem": URL_VISTA},
+    {"id": 10, "nome": "Condomínio Sol Nascente", "preco": 270000, "tipo": "Apartamento", "quartos": 3, "banheiros": 2, "vagas": 1, "area": 85, "bairro": "Tabuleiro dos Guararapes", "cidade": "Maceió", "descricao": "Amplo空间 com ótima localização e infraestrutura completa.", "imagem": URL_BOSQUE},
+    {"id": 11, "nome": "Casa de Praia", "preco": 520000, "tipo": "Casa", "quartos": 3, "banheiros": 2, "vagas": 2, "area": 160, "bairro": "Santo Amaro", "cidade": "Maceió", "descricao": "A poucos metros da praia, perfeita para veraneio.", "imagem": URL_PALMEIRAS},
+    {"id": 12, "nome": "Loft Industrial", "preco": 195000, "tipo": "Loft", "quartos": 1, "banheiros": 1, "vagas": 1, "area": 55, "bairro": "Centro", "cidade": "Maceió", "descricao": "Espaço moderno com pé-direito alto e design contemporâneo.", "imagem": URL_VISTA},
+]
+
 IMOVEIS_OPCOES = {
-    "Residencial Bosque Imperial - R$ 350.000,00": 350000.0,
-    "Condomínio Jardim das Palmeiras - R$ 220.000,00": 220000.0,
-    "Residencial Vista Verde - R$ 185.000,00": 185000.0,
+    f"{imovel['nome']} - R$ {imovel['preco']:,.2f}": imovel['preco']
+    for imovel in LISTA_IMOVEIS
 }
 
 # --- 1. CONFIGURAÇÃO DA PÁGINA ---
@@ -526,65 +540,100 @@ elif st.session_state["etapa_fluxo"] == "painel_geral":
     st.markdown(
         f"""
         <div style='background-image: url("{URL_BANNER}"); background-size: cover; background-position: center;
-                     height: 250px; border-radius: 16px; margin-bottom: 2rem;'>
+                     height: 250px; border-radius: 16px; margin-bottom: 1.5rem;'>
         </div>
         """,
         unsafe_allow_html=True,
     )
-    st.markdown("<h3>Oportunidades e Destaques da Semana</h3>", unsafe_allow_html=True)
 
-    col_img1, col_img2, col_img3 = st.columns(3)
+    with st.form("form_busca", clear_on_submit=False):
+        busca_col1, busca_col2, busca_col3, busca_col4 = st.columns([3, 1, 1, 1])
+        with busca_col1:
+            texto_busca = st.text_input(" ", placeholder="Buscar por bairro, cidade ou nome do imóvel...", label_visibility="collapsed")
+        with busca_col2:
+            tipo_busca = st.selectbox(" ", ["Todos", "Casa", "Apartamento", "Cobertura", "Flat", "Kitnet", "Loft"], label_visibility="collapsed")
+        with busca_col3:
+            preco_max = st.number_input(" ", value=0, placeholder="Preço máximo", label_visibility="collapsed")
+        with busca_col4:
+            buscar_btn = st.form_submit_button("Buscar", use_container_width=True)
 
-    with col_img1:
-        st.markdown(
-            f"""
-            <div class="card-imovel">
-                <img src='{URL_BOSQUE}' style='width:100%; height:220px; object-fit:cover; border-radius:8px; margin-bottom:12px;' />
-                <h4 style="margin-top:0; font-size:1.1rem; font-weight:700;">Residencial Bosque Imperial</h4>
-                <p class='subtitulo-cinza' style='font-size:0.85rem; font-style:italic; margin-bottom:12px;'>Conforto, segurança e área de lazer completa para a família.</p>
-                <p style='color: #0E1D2F !important; font-weight: 800; margin-bottom:0; font-size:0.95rem;'>Valores a partir de R$ 350 mil</p>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-        if st.button("Simule sua entrada", key="btn_simular_bosque", use_container_width=True):
-            st.session_state["imovel_selecionado"] = "Residencial Bosque Imperial - R$ 350.000,00"
-            st.session_state["etapa_fluxo"] = "passo1_cliente"
-            st.rerun()
+    filtro_col, resultado_col = st.columns([1, 3])
 
-    with col_img2:
-        st.markdown(
-            f"""
-            <div class="card-imovel">
-                <img src='{URL_PALMEIRAS}' style='width:100%; height:220px; object-fit:cover; border-radius:8px; margin-bottom:12px;' />
-                <h4 style="margin-top:0; font-size:1.1rem; font-weight:700;">Condomínio Jardim das Palmeiras</h4>
-                <p class='subtitulo-cinza' style='font-size:0.85rem; font-style:italic; margin-bottom:12px;'>O lugar ideal para viver seus melhores momentos ao ar livre.</p>
-                <p style='color: #0E1D2F !important; font-weight: 800; margin-bottom:0; font-size:0.95rem;'>Valores a partir de R$ 220 mil</p>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-        if st.button("Simule sua entrada", key="btn_simular_palmeiras", use_container_width=True):
-            st.session_state["imovel_selecionado"] = "Condomínio Jardim das Palmeiras - R$ 220.000,00"
-            st.session_state["etapa_fluxo"] = "passo1_cliente"
-            st.rerun()
+    with filtro_col:
+        st.markdown("<h3 style='font-size:1rem; margin-bottom:1rem;'>Filtros</h3>", unsafe_allow_html=True)
+        faixa_preco = st.slider("Faixa de Preço", 50000, 1000000, (50000, 1000000), step=10000, format="R$ %s")
+        quartos_filtro = st.multiselect("Quartos", [1, 2, 3, 4], default=[])
+        vagas_filtro = st.multiselect("Vagas", [0, 1, 2, 3], default=[])
+        ordenar = st.selectbox("Ordenar por", ["Menor preço", "Maior preço", "Maior área"])
 
-    with col_img3:
-        st.markdown(
-            f"""
-            <div class="card-imovel">
-                <img src='{URL_VISTA}' style='width:100%; height:220px; object-fit:cover; border-radius:8px; margin-bottom:12px;' />
-                <h4 style="margin-top:0; font-size:1.1rem; font-weight:700;">Residencial Vista Verde</h4>
-                <p class='subtitulo-cinza' style='font-size:0.85rem; font-style:italic; margin-bottom:12px;'>Seu novo lar cercado de tranquilidade e natureza.</p>
-                <p style='color: #0E1D2F !important; font-weight: 800; margin-bottom:12px; font-size:0.95rem;'>Valores a partir de R$ 185 mil</p>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-        if st.button("Simule sua entrada", key="btn_simular_vista", use_container_width=True):
-            st.session_state["imovel_selecionado"] = "Residencial Vista Verde - R$ 185.000,00"
-            st.session_state["etapa_fluxo"] = "passo1_cliente"
-            st.rerun()
+    imoveis_filtrados = LISTA_IMOVEIS[:]
+
+    if texto_busca:
+        busca_lower = texto_busca.lower()
+        imoveis_filtrados = [i for i in imoveis_filtrados if busca_lower in i["nome"].lower() or busca_lower in i["bairro"].lower() or busca_lower in i["cidade"].lower()]
+
+    if tipo_busca != "Todos":
+        imoveis_filtrados = [i for i in imoveis_filtrados if i["tipo"] == tipo_busca]
+
+    imoveis_filtrados = [i for i in imoveis_filtrados if faixa_preco[0] <= i["preco"] <= faixa_preco[1]]
+
+    if quartos_filtro:
+        imoveis_filtrados = [i for i in imoveis_filtrados if i["quartos"] in quartos_filtro]
+
+    if vagas_filtro:
+        imoveis_filtrados = [i for i in imoveis_filtrados if i["vagas"] in vagas_filtro]
+
+    if preco_max > 0:
+        imoveis_filtrados = [i for i in imoveis_filtrados if i["preco"] <= preco_max]
+
+    if ordenar == "Menor preço":
+        imoveis_filtrados.sort(key=lambda x: x["preco"])
+    elif ordenar == "Maior preço":
+        imoveis_filtrados.sort(key=lambda x: x["preco"], reverse=True)
+    elif ordenar == "Maior área":
+        imoveis_filtrados.sort(key=lambda x: x["area"], reverse=True)
+
+    with resultado_col:
+        st.markdown(f"<h3 style='font-size:1.1rem;'>{len(imoveis_filtrados)} imóveis encontrados</h3>", unsafe_allow_html=True)
+
+        if not imoveis_filtrados:
+            st.warning("Nenhum imóvel encontrado com os filtros selecionados.")
+        else:
+            for i in range(0, len(imoveis_filtrados), 2):
+                cols = st.columns(2)
+                for idx, col in enumerate(cols):
+                    pos = i + idx
+                    if pos >= len(imoveis_filtrados):
+                        break
+                    imovel = imoveis_filtrados[pos]
+                    with col:
+                        st.markdown(
+                            f"""
+                            <div class="card-imovel" style='padding:0; overflow:hidden;'>
+                                <img src='{imovel["imagem"]}' style='width:100%; height:200px; object-fit:cover;' />
+                                <div style='padding:16px;'>
+                                    <div style='display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;'>
+                                        <span style='background:#1B8A8A; color:#fff; padding:2px 8px; border-radius:4px; font-size:0.75rem; font-weight:600;'>{imovel["tipo"]}</span>
+                                        <span style='color:#888; font-size:0.8rem;'>{imovel["cidade"]}</span>
+                                    </div>
+                                    <h4 style='margin:0 0 4px 0; font-size:1rem; font-weight:700; color:#1A1A1A;'>{imovel["nome"]}</h4>
+                                    <p style='color:#666; font-size:0.8rem; margin:0 0 10px 0;'>{imovel["bairro"]}</p>
+                                    <div style='display:flex; gap:12px; margin-bottom:10px;'>
+                                        <span style='color:#555; font-size:0.8rem;'>🛏 {imovel["quartos"]} quartos</span>
+                                        <span style='color:#555; font-size:0.8rem;'>🚿 {imovel["banheiros"]} ban.</span>
+                                        <span style='color:#555; font-size:0.8rem;'>🚗 {imovel["vagas"]} vaga(s)</span>
+                                        <span style='color:#555; font-size:0.8rem;'>📐 {imovel["area"]}m²</span>
+                                    </div>
+                                    <p style='color:#1A1A1A; font-weight:800; font-size:1.15rem; margin:0;'>R$ {imovel["preco"]:,.2f}</p>
+                                </div>
+                            </div>
+                            """,
+                            unsafe_allow_html=True,
+                        )
+                        if st.button("Simular financiamento", key=f"btn_sim_{imovel['id']}", use_container_width=True):
+                            st.session_state["imovel_selecionado"] = f"{imovel['nome']} - R$ {imovel['preco']:,.2f}"
+                            st.session_state["etapa_fluxo"] = "passo1_cliente"
+                            st.rerun()
 
 # --- 5. PASSO 1: COMPLETAR FICHA DO CLIENTE ---
 elif st.session_state["etapa_fluxo"] == "passo1_cliente":
